@@ -80,7 +80,9 @@ const Navbar = () => {
 
 
           <Link to="/user">
-          
+          <div className="w-8 h-8 bg-purple-700 text-white flex items-center justify-center rounded-full font-bold">
+            U
+          </div>
         </Link>
         </div>
       </div>

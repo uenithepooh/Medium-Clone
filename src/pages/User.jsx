@@ -1,13 +1,17 @@
-import React from 'react';
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import user from '../data/user';
 import Navbar from "../components/Navbar";
-import articles from '../data/articles';
-
 
 const UserPage = () => {
   const [activeTab, setActiveTab] = useState("home");
+  const [articles, setArticles] = useState([]);
+
+    useEffect(() => {
+    const savedArticles = JSON.parse(localStorage.getItem("articles")) || [];
+    setArticles(savedArticles);
+  }, []);
+  
      return (
     <div>
         <Navbar />
@@ -51,9 +55,19 @@ const UserPage = () => {
                         </nav>
                         <div className="mt-6 px-4 max-w-2xl mx-auto">
                             {activeTab === "home" && (
-                                <div>
-                                    <p>no article yet</p>
-                                </div>
+                                <div className="p-6">
+                                    {articles.length === 0 ? (
+                                        <p>No article yet</p>
+                                    ) : (
+                                        articles.map((article) => (
+                                        <div key={article.id} className="mb-4 border p-4 rounded-lg bg-white shadow">
+                                            <h2 className="text-xl font-bold">{article.title}</h2>
+                                            <p className="mt-2">{article.story}</p>
+                                            <p className="text-sm text-gray-500 mt-1">— {article.author}</p>
+                                        </div>
+                                        ))
+                                    )}
+                                    </div>
                             )}
                             {activeTab === "about" && (
                                 <div>
